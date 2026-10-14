@@ -1,43 +1,35 @@
 <div class="calculator-container">
-    <h2>Student Marks Calculator</h2>
-  
-    <form [formGroup]="markForm" (ngSubmit)="calculate()">
-      <div formArrayName="subjects">
-        <div *ngFor="let sub of subjects.controls; let i=index" [formGroupName]="i" class="subject-row">
-          
-          <label>Subject {{ i + 1 }}:</label>
-          <input type="number" formControlName="mark" placeholder="Enter mark (0-100)">
-          
-          <button type="button" class="btn-remove" (click)="removeSubject(i)" *ngIf="subjects.length > 1">
-            X
-          </button>
-  
-          <div class="error" *ngIf="sub.get('mark')?.invalid && sub.get('mark')?.touched">
-            <small *ngIf="sub.get('mark')?.hasError('required')">Mark is required.</small>
-            <small *ngIf="sub.get('mark')?.hasError('min') || sub.get('mark')?.hasError('max')">Must be between 0-100.</small>
-            <small *ngIf="sub.get('mark')?.hasError('pattern')">Must be a whole number.</small>
-          </div>
-        </div>
-      </div>
-  
-      <div class="actions">
-        <button type="button" class="btn-add" (click)="addSubject()">+ Add Subject</button>
-        <button type="button" class="btn-reset" (click)="reset()">Reset</button>
-        <button type="submit" class="btn-calc">Calculate Result</button>
-      </div>
-    </form>
-  
-    <div class="results" *ngIf="result">
-      <h3>Result Summary</h3>
-      <p><strong>Total Marks:</strong> {{ result.total }} / {{ result.maxPossible }}</p>
-      <p><strong>Percentage:</strong> {{ result.percentage }}%</p>
-      <p><strong>Status:</strong> 
-        <span [class.pass]="result.status === 'Pass'" [class.fail]="result.status === 'Fail'">
-          {{ result.status }}
-        </span>
-      </p>
-      <p *ngIf="result.status === 'Pass'"><strong>Grade:</strong> {{ result.grade }}</p>
-      <p><strong>Highest Mark:</strong> {{ result.highest }}</p>
-      <p><strong>Lowest Mark:</strong> {{ result.lowest }}</p>
-    </div>
+  <h2>Student Marks Calculator</h2>
+
+  <div *ngIf="showError" style="color: red; margin-bottom: 15px;">
+    Please enter a valid whole number (0-100) for all subjects.
   </div>
+
+  <div *ngFor="let sub of subjects; let i = index" class="subject-row">
+    <label>Subject {{ i + 1 }}:</label>
+    
+    <input type="number" [(ngModel)]="sub.mark" placeholder="Enter mark (0-100)">
+    
+    <button *ngIf="subjects.length > 1" (click)="removeSubject(i)" class="btn-remove">X</button>
+  </div>
+
+  <div class="actions">
+    <button (click)="addSubject()" class="btn-add">+ Add Subject</button>
+    <button (click)="reset()" class="btn-reset">Reset</button>
+    <button (click)="calculate()" class="btn-calc">Calculate Result</button>
+  </div>
+
+  <div class="results" *ngIf="result">
+    <h3>Result Summary</h3>
+    <p><strong>Total Marks:</strong> {{ result.total }} / {{ result.maxPossible }}</p>
+    <p><strong>Percentage:</strong> {{ result.percentage }}%</p>
+    <p><strong>Status:</strong> 
+      <span [style.color]="result.status === 'Pass' ? 'green' : 'red'">
+        <strong>{{ result.status }}</strong>
+      </span>
+    </p>
+    <p *ngIf="result.status === 'Pass'"><strong>Grade:</strong> {{ result.grade }}</p>
+    <p><strong>Highest Mark:</strong> {{ result.highest }}</p>
+    <p><strong>Lowest Mark:</strong> {{ result.lowest }}</p>
+  </div>
+</div>

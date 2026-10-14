@@ -1,65 +1,107 @@
+$primary-color: #007bff;
+$danger-color: #ff4d4d;
+$secondary-color: #6c757d;
+$border-radius: 8px;
+
 .calculator-container {
-    max-width: 500px;
-    margin: 20px auto;
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    font-family: Arial, sans-serif;
-    background-color: #f9f9f9;
-  }
-  
+  max-width: 500px;
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: $border-radius;
+  font-family: Arial, sans-serif;
+  background-color: #f9f9f9;
+
   .subject-row {
     margin-bottom: 15px;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     gap: 10px;
+
+    label {
+      font-weight: bold;
+      min-width: 80px;
+    }
+
+    input {
+      padding: 8px;
+      width: 150px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      outline: none;
+
+      &:focus {
+        border-color: $primary-color;
+      }
+    }
   }
-  
-  .subject-row label {
-    font-weight: bold;
-    min-width: 80px;
-  }
-  
-  .subject-row input {
-    padding: 8px;
-    width: 150px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-  
+
   .error {
-    color: red;
+    color: $danger-color;
     flex-basis: 100%;
     margin-left: 90px;
   }
-  
+
   .actions {
     display: flex;
     gap: 10px;
     margin-top: 20px;
+
+    button {
+      padding: 8px 12px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+
+      &.btn-add {
+        background-color: #e0e0e0;
+        color: #333;
+        &:hover { background-color: #d1d1d1; }
+      }
+
+      &.btn-remove {
+        background-color: $danger-color;
+        color: white;
+        padding: 5px 10px;
+        &:hover { background-color: darken($danger-color, 10%); }
+      }
+
+      &.btn-reset {
+        background-color: $secondary-color;
+        color: white;
+        &:hover { background-color: darken($secondary-color, 10%); }
+      }
+
+      &.btn-calc {
+        background-color: $primary-color;
+        color: white;
+        &:hover { background-color: darken($primary-color, 10%); }
+      }
+    }
   }
-  
-  button {
-    padding: 8px 12px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-weight: bold;
-  }
-  
-  .btn-add { background-color: #e0e0e0; color: #333; }
-  .btn-remove { background-color: #ff4d4d; color: white; padding: 5px 10px; }
-  .btn-reset { background-color: #6c757d; color: white; }
-  .btn-calc { background-color: #007bff; color: white; }
-  
+
   .results {
     margin-top: 25px;
     padding: 15px;
     background: #fff;
-    border: 1px solid #b3d4fc;
+    border: 1px solid lighten($primary-color, 30%);
     border-radius: 5px;
+
+    h3 {
+      margin-top: 0;
+    }
   }
-  
-  .pass { color: green; font-weight: bold; }
-  .fail { color: red; font-weight: bold; }
+
+  .pass {
+    color: green;
+    font-weight: bold;
+  }
+
+  .fail {
+    color: $danger-color;
+    font-weight: bold;
+  }
+}
